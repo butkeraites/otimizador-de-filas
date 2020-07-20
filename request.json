@@ -1,0 +1,9 @@
+{
+	"largura_sala": 10,
+ 	"comprimento_sala": 7,
+ 	"largura_cadeira": 0.5,
+ 	"comprimento_cadeira": 0.5,
+ 	"num_carteiras": 6,
+    "num_fileiras": 10,
+ 	"distancia_minima": 1.0
+}
