@@ -9,7 +9,7 @@ def otimizar_filas(hs,
                    hc,
                    vc,
                    m,
-                   n,
+                   n, #LISTA COM ARGURAS DOS CORREDORES VERTICAIS
                    dmin):
   #PAINEL DE CONTROLE
   #hs = 10 #largura da sala
@@ -18,24 +18,29 @@ def otimizar_filas(hs,
   #hc = 0.5 #largura da cadeira
   #vc = 0.5 #comprimento da cadeira
 
-  hr = (hs-n*hc)/(n-1) #largura do corredor vertical
-  vr = (vs-m*vc)/(m-1) #comprimento do corredor horizontal
+  vr = (vs-m*vc)/(m) #comprimento do corredor horizontal
 
   #dmin = 1 #ditancia minima entre pessoas
 
   #CALCULO DOS PARAMETROS
   cadeiras = []
+  coordenada_y = 0
   for j in range(m):
-    for i in range(n):
+    if j > 0: 
+      coordenada_y += vc + vr
+    coordenada_x = 0
+    for i in (range(len(n)+1)):
+      if i > 0:
+        coordenada_x = coordenada_x + hc + n[i-1]
       cadeira = {
-          'id' : j*n+i,
+          'id' : j*(len(n)+1)+i,
           'fileira' : i+1,
           'cadeira' : j+1,
-          'x' : i*(hs/n),   #coordenadas consideradas do canto superior
-          'y' : j*(vs/m)    #esquerdo do retangulo de ocupacao do aluno
+          'x' : coordenada_x,   #coordenadas consideradas do canto superior
+          'y' : coordenada_y    #esquerdo do retangulo de ocupacao do aluno
       }
       cadeiras.append(cadeira)
-  #print(pd.DataFrame(cadeiras))
+  print(pd.DataFrame(cadeiras))
 
   #print("Tabela de nao adjacencia entre as cadeiras da sala:")
   nao_adjacencia = []
@@ -95,12 +100,12 @@ def otimizar_filas(hs,
       resposta = []
       for l in range(solver.NumVariables()):
         resposta.append(x[l].solution_value())
-      resposta = np.reshape(resposta,(m,n))
+      resposta = np.reshape(resposta,(m,(len(n)+1)))
       return {'status' : 1,
               'num_alunos' : solver.Objective().Value(),
-              'num_fileiras' : n,
+              'num_fileiras' : (len(n)+1),
               'num_carteiras' : m,
-              "largura_corredor_vertical": hr,
+              "largura_corredores_verticais": n,
  	            "largura_corredor_horizontal": vr,
               'resposta' : resposta.T.tolist(),
               'tempo_resolucao' : solver.wall_time(),
@@ -117,3 +122,17 @@ def otimizar_filas(hs,
   #print('Problema resolvido em %d iteracoes' % solver.iterations())
   #print('Problema resolvido em %d nos do branch-and-bound' % solver.nodes())
   # [END advanced]
+
+def main():
+  hs = 10
+  vs = 7
+  hc = 0.5
+  vc = 0.5
+  m = 6
+  n = [1,2,1,1,2,1]
+  dmin = 1.0
+  print(otimizar_filas(hs,vs,hc,vc,m,n, dmin))
+
+  
+if __name__ == "__main__":
+  main()

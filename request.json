@@ -4,6 +4,6 @@
  	"largura_cadeira": 0.5,
  	"comprimento_cadeira": 0.5,
  	"num_carteiras": 6,
-    "num_fileiras": 10,
+    "largura_corredores": [1,2,1,1,2,1],
  	"distancia_minima": 1.0
 }

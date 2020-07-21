@@ -16,7 +16,7 @@ class OtimizarFilas(Resource):
         largura_cadeira = posted_data['largura_cadeira']
         comprimento_cadeira = posted_data['comprimento_cadeira']
         num_carteiras = posted_data['num_carteiras']
-        num_fileiras = posted_data['num_fileiras']
+        largura_corredores = posted_data['largura_corredores']
         distancia_minima = posted_data['distancia_minima']
 
         return jsonify(otimizar_filas(largura_sala,
@@ -24,7 +24,7 @@ class OtimizarFilas(Resource):
                                       largura_cadeira,
                                       comprimento_cadeira,
                                       num_carteiras,
-                                      num_fileiras,
+                                      largura_corredores,
                                       distancia_minima))
 
 api.add_resource(OtimizarFilas, '/otimizar-filas')
