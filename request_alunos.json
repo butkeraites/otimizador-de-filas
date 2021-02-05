@@ -5,6 +5,6 @@
  	"comprimento_cadeira": 0.5,
  	"num_carteiras": 6,
     "largura_corredores": [1,2,1,1,2,1],
-	"modelo" : "max_distancia",
-	"numero_de_alunos" : 20
+ 	"distancia_minima": 1.0,
+	"modelo" : "max_alunos"
 }
